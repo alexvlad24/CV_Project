@@ -1,0 +1,133 @@
+{
+  "target_role": "Cloud Engineer",
+  "executive_summary": "The candidate is a mid-level Software Developer with a solid foundation in Python and Docker, aligning well with the Cloud Engineer role. Transitioning to this position is feasible, but the candidate must prioritize acquiring skills in AWS, Terraform, and Linux to fully meet job requirements.",
+  "gap_analysis": {
+    "match_percentage": 50,
+    "matching_skills": [
+      "Python",
+      "Docker"
+    ],
+    "missing_skills": [
+      "AWS",
+      "Terraform",
+      "Linux"
+    ],
+    "transferable_skills": [
+      "Full-stack web development",
+      "Backend engineering",
+      "RESTful APIs"
+    ],
+    "seniority_fit": "Direct Fit",
+    "justification": "The candidate has a solid foundation in Python and Docker, which are relevant to the Cloud Engineer role. However, they lack experience with AWS, Terraform, and Linux, which are critical for the position. Given their 2 years of experience, they fit the junior level expectations, but the missing skills indicate a need for further development in cloud technologies."
+  },
+  "learning_roadmap": [
+    {
+      "phase_number": 1,
+      "title": "Faza 1: AWS Fundamentals",
+      "duration_weeks": 4,
+      "focus_technologies": [
+        "AWS",
+        "S3",
+        "EC2"
+      ],
+      "recommended_resources": [
+        "AWS Certified Cloud Practitioner Learning Path - Coursera",
+        "Hands-On Labs for AWS - Whizlabs"
+      ],
+      "practical_milestone": "Create and manage an S3 bucket and EC2 instance."
+    },
+    {
+      "phase_number": 2,
+      "title": "Faza 2: Infrastructure as Code with Terraform",
+      "duration_weeks": 4,
+      "focus_technologies": [
+        "Terraform"
+      ],
+      "recommended_resources": [
+        "Terraform Tutorial for Beginners - YouTube",
+        "HashiCorp Terraform Documentation"
+      ],
+      "practical_milestone": "Deploy a simple web application on AWS using Terraform."
+    },
+    {
+      "phase_number": 3,
+      "title": "Faza 3: Linux Basics for Cloud",
+      "duration_weeks": 2,
+      "focus_technologies": [
+        "Linux"
+      ],
+      "recommended_resources": [
+        "Linux Command Line Basics - Coursera",
+        "The Linux Foundation's Introduction to Linux"
+      ],
+      "practical_milestone": "Set up a Linux server and perform basic commands."
+    }
+  ],
+  "portfolio_project": {
+    "project_title": "Cloud-Based Web Application Deployment",
+    "business_context": "This project addresses the need for scalable web applications hosted in the cloud, providing a robust solution for businesses looking to leverage cloud infrastructure for better performance and reliability.",
+    "target_role_alignment": "The project demonstrates the candidate's ability to deploy applications using AWS and Terraform, showcasing their newly acquired skills in cloud technologies.",
+    "tech_stack_used": [
+      "AWS",
+      "Terraform",
+      "Docker",
+      "Python",
+      "FastAPI",
+      "PostgreSQL"
+    ],
+    "architecture_overview": "The application will be containerized using Docker, deployed on AWS EC2 instances, and managed with Terraform for infrastructure as code. The architecture will include a PostgreSQL database hosted on AWS RDS, ensuring data persistence and scalability.",
+    "key_features_to_implement": [
+      "Automated deployment pipeline using Terraform",
+      "Docker containerization for the application",
+      "Monitoring and logging setup using AWS CloudWatch",
+      "Database connection pooling with PostgreSQL"
+    ],
+    "step_by_step_implementation_guide": [
+      "Set up an AWS account and configure the CLI.",
+      "Create a Dockerfile for the FastAPI application.",
+      "Build and test the Docker container locally.",
+      "Write Terraform scripts to provision AWS resources (EC2, RDS).",
+      "Deploy the application to AWS using Terraform.",
+      "Configure security groups and IAM roles for access control."
+    ],
+    "github_readme_highlights": "Include architectural diagrams, setup instructions, and testing evidence. Provide a clear description of the project, its purpose, and how to run it locally and on AWS."
+  },
+  "interview_preparation": [
+    {
+      "category": "Technical Deep-Dive",
+      "question": "Explain how you would deploy a web application using AWS and Terraform.",
+      "ideal_answer_points": [
+        "Describe the process of setting up AWS resources using Terraform.",
+        "Mention the importance of infrastructure as code.",
+        "Discuss how to manage state files and handle updates."
+      ]
+    },
+    {
+      "category": "Scenario-Based",
+      "question": "How would you troubleshoot a cloud service that is experiencing downtime?",
+      "ideal_answer_points": [
+        "Check AWS CloudWatch for logs and metrics.",
+        "Verify the health of EC2 instances and RDS databases.",
+        "Discuss scaling options and load balancing."
+      ]
+    },
+    {
+      "category": "Technical Deep-Dive",
+      "question": "What are the key differences between S3 and EBS in AWS?",
+      "ideal_answer_points": [
+        "S3 is object storage, while EBS is block storage.",
+        "Discuss use cases for each service.",
+        "Explain data durability and availability."
+      ]
+    },
+    {
+      "category": "Technical Deep-Dive",
+      "question": "Can you explain what Docker is and how it is used in cloud environments?",
+      "ideal_answer_points": [
+        "Define Docker and its purpose in containerization.",
+        "Discuss how Docker simplifies deployment in cloud environments.",
+        "Mention orchestration tools like Kubernetes."
+      ]
+    }
+  ]
+}

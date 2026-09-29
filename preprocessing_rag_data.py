@@ -1,0 +1,115 @@
+from it_jobs_batch_processor import ITJobRoleItem, ITJobBatchProcessor
+
+ROLES_LIST = [
+    "Software Engineer",
+    "Software Developer",
+    "Full Stack Developer",
+    "Backend Developer",
+    "Frontend Developer",
+    "Data Scientist",
+    "Machine Learning Engineer",
+    "AI Engineer",
+    "DevOps Engineer",
+    "Cloud Engineer",
+    "Data Analyst",
+    "Business Intelligence Analyst",
+    "QA Engineer",
+    "Test Automation Engineer",
+    "iOS Mobile App Developer",
+    "Android Mobile App Developer",
+    "Vibe Coder",
+    "UI Designer",
+    "UX Designer",
+    "Product Designer",
+    "Cybersecurity Analyst",
+    "Python Developer",
+    "Data Engineer",
+    "Network Engineer",
+    "Cloud Architect",
+    "Systems Engineer",
+    "Java Developer",
+    ".NET Developer",
+    "Web Developer",
+    "Software Tester (SDET)",
+    "Solutions Architect",
+    "Big Data Specialist",
+    "Fintech Engineer",
+    "AI Prompt Engineer",
+    "Blockchain Developer",
+    "Robotics Engineer",
+    "Javascript Developer",
+    "AR/VR Developer",
+    "IoT Engineer",
+    "Ethical Hacker",
+    "Site Reliability Engineer (SRE)",
+    "Game Developer",
+    "Go / Golang Developer",
+    "Rust Developer",
+    "Ruby on Rails Developer",
+    "PHP / Laravel Developer",
+    "Scala Developer",
+    "Elixir / Erlang Developer",
+    "Embedded Systems Engineer",
+    "Firmware Engineer",
+    "Linux Kernel Developer",
+    "Distributed Systems Engineer",
+    "Flutter Mobile Developer",
+    "React Native Developer",
+    "Vue.js Developer",
+    "Angular Developer",
+    "Cross-Platform Mobile Engineer",
+    "Web3 / DApp Frontend Developer",
+    "LLM / Generative AI Engineer",
+    "MLOps Engineer",
+    "Computer Vision Engineer",
+    "NLP Engineer",
+    "AI Ethics & Compliance Specialist",
+    "Data Architect",
+    "Analytics Engineer",
+    "DBA / Database Administrator (PostgreSQL / MySQL / Oracle)",
+    "Platform Engineer",
+    "Kubernetes / Containerization Specialist",
+    "DevSecOps SRE",
+    "FinOps Specialist",
+    "Infrastructure-as-Code (IaC) Engineer",
+    "AWS Cloud Engineer",
+    "Azure Cloud Engineer",
+    "Google Cloud (GCP) Engineer",
+    "AppSec Engineer",
+    "SOC Analyst",
+    "Cloud Security Architect",
+    "Incident Response Specialist",
+    "Identity and Access Management (IAM) Engineer",
+    "DevSecOps Engineer",
+    "Technical Lead",
+    "Engineering Manager",
+    "Enterprise Architect",
+    "Technical Product Manager",
+    "Scrum Master / Agile Delivery Manager",
+    "Developer Relations (DevRel)",
+    "Salesforce Developer / Administrator",
+    "SAP Technical Consultant",
+    "ServiceNow Developer",
+    "Performance & Load Testing Engineer",
+    "Sitecore / CMS Developer",
+    "RPA Developer",
+]
+
+
+# Executes full synthetic job dataset generation pipeline via OpenAI Batch API and exports results to CSV.
+def generate_synthetic_jobs_dataset(
+    output_csv_path: str = "it_jobs_synthetic_279.csv",
+) -> None:
+    items = [
+        ITJobRoleItem(role_id=idx, role_name=role)
+        for idx, role in enumerate(ROLES_LIST, 1)
+    ]
+    ITJobBatchProcessor.create(items)
+    ITJobBatchProcessor.run()
+    ITJobBatchProcessor.save_state()
+    ITJobBatchProcessor.load_state(items)
+    ITJobBatchProcessor.fetch_and_save_csv(output_csv_path)
+
+
+if __name__ == "__main__":
+    generate_synthetic_jobs_dataset()
