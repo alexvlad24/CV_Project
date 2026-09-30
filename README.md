@@ -45,3 +45,10 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
 * Conversațiile au fost structurate în format de Supervised Fine-Tuning (`messages`: `system`, `user`, `assistant`).
 * Setul de date rezultat a fost divizat stratificat în `train`, `validation` și `test` și publicat pe Hugging Face:
   * **Dataset:** `alecs-vlad24/cv-resume-structuring-v2pro`
+
+  Dataset-ul brut conținea exclusiv text needitat de CV. Pentru a antrena un model open-source local să structureze datele determinist, aveam nevoie de o bază de antrenament formată din perechi de tipul:  
+`Text Brut (Prompt)` ➡️️ `JSON Structurat Ideal (Ground Truth)`
+
+* **Sintetizare de date la standard înalt:** `gpt-4o-mini` a fost ghidat printr-un prompt de sistem riguros să extragă cele 5 dimensiuni cheie: `Candidate_Role`, `Experience_Level`, `Years_Of_Experience`, `Primary_Skills` și `Clean_Summary`.
+* **Calcul temporal precis:** Promptul a forțat calculul matematic al vechimii luând anul **2026** ca punct de referință pentru rolurile active (*"Present"*), eliminând aproximările ambigue.
+* **Eficiență de cost și rată de procesare:** Folosind **OpenAI Batch API** (asincron, cu fereastră de livrare de 24h), procesarea a beneficiat de un **discount de 50% din costul API** și a eliminat complet erorile de rate-limiting (TPM/RPM) care ar fi apărut la apeluri clasice sincron
