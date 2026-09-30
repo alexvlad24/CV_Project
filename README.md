@@ -75,7 +75,7 @@ Antrenarea modelului a fost realizată în Google Colab (GPU Tesla T4) folosind 
 
 ---
 
-### 3. Monitorizarea Curbei de Învățare (Weights & Biases)
+### Monitorizarea Curbei de Învățare (Weights & Biases)
 
 Antrenamentul a fost monitorizat complet în **Weights & Biases (W&B)**:
 
@@ -88,7 +88,7 @@ Antrenamentul a fost monitorizat complet în **Weights & Biases (W&B)**:
 
 ---
 
-### 4. Evaluarea Modelului pe Setul de Test (350 CV-uri)
+### Evaluarea Modelului pe Setul de Test (350 CV-uri)
 
 Performanța finală a modelului a fost calculată prin inferență directă pe cele **350 de CV-uri din setul de testare** (complet nevăzute la antrenare)[cite: 13]:
 
@@ -97,3 +97,5 @@ Performanța finală a modelului a fost calculată prin inferență directă pe 
 | **JSON Format Valid** | **98.6%** | Rata de răspunsuri generate direct ca obiecte JSON parsabile, fără text adiacent sau erori de sintaxă. |
 | **Acuratețe Potrivire Rol** | **85.7%** | Procentul de identificare și clasificare corectă a titulaturii profesionale conform profilului real. |
 | **Suprapunere Skill-uri (Jaccard Index)** | **68.5%** | Măsura strictă de suprapunere între tehnologiile extrase de model și cele din Ground Truth. |
+
+
