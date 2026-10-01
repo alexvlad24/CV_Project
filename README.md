@@ -31,9 +31,27 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
 
    * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
 
-3. **Agent 3 (Technical Gap Analysis & Career Roadmap):**
-   * Compară profilul structurat al candidatului cu cerințele joburilor selectate.
-   * Calculează scorul de potrivire tehnică, evidențiază competențele lipsă și elaborează un plan de învățare structurat pe etape.
+3. **Agent 3 (Technical Gap Analysis & Career Roadmap via ReAct Loop):**
+   * Compară profilul structurat al candidatului cu cerințele joburilor selectate
+   * **Orchestrare cu LangGraph & Arhitectură ReAct:** Funcționează autonom pe baza unui ciclu ReAct (Reasoning + Acting) cu memorie tranzacțională gestionată prin reducer-ul de mesaje `add_messages` (`Agent3State`):
+     * `reasoner`: Nod decizional care inspectează istoricul conversației și determină autonom ce unealtă specializată trebuie apelată sau dacă poate declanșa sinteza finală.
+     * `executor`: Nod de execuție care rulează apelurile de funcții (Function Calling) paralele sau secvențiale și întoarce observațiile tehnice sub formă de instanțe `ToolMessage`.
+     * `should_continue`: Router condițional echipat cu un mecanism de siguranță (Circuit Breaker limitat la maximum 6 iterații) pentru a preveni buclele infinite.
+     * `synthesizer`: Nod de agregare finală care compilează toate dovezile acumulate într-un raport complet.
+
+   * **Setul de Unelte Specializate (Autonomous Tool Suite):**
+     * `tool_cv_gap_analyzer`: Evaluează compatibilitatea tehnică între 0-100%, identifică `matching_skills`, `missing_skills`, `transferable_skills` și clasifică potrivirea nivelului de senioritate (`Direct Fit`, `Under-qualified`, `Over-qualified`).
+     * `tool_roadmap_generator`: Construiește un plan educațional modular de 2-4 etape, specificând tehnologiile țintă, durata estimată în săptămâni și proiecte practice de validare cu arhitectură enterprise.
+     * `tool_web_search`: Interoghează web-ul live prin **Tavily Search API** pentru a extrage documentație tehnică oficială, tutoriale verificate și resurse educaționale dedicate tehnologiilor lipsă.
+     * `tool_interview_questions_generator`: Sintetizează 4-6 întrebări tehnice avansate de interviu calibrate pe scenarii de producție, punând accent 60% pe lacunele identificate și 40% pe integrarea cu stack-ul deja stăpânit de candidat.
+
+   * **Sinteză Structurată cu Pydantic (`FinalCareerReport`):** Livrează un raport executiv compilat strict conform schemei:
+     * `Executive Summary`: Notă strategică de 2-3 fraze despre fezabilitatea tranziției profesionale.
+     * `Technical Gap Analysis`: Matricea completă a compatibilității și justificarea tehnică a scorului.
+     * `Phased Roadmap`: Planul etapizat pe săptămâni pentru acoperirea lacunelor.
+     * `Portfolio Project`: Specificația completă a unui proiect practic demonstrativ (arhitectură, scenariu de business, ghid de implementare pas cu pas și cerințe pentru README pe GitHub).
+     * `Interview Prep`: Întrebări tehnice pe categorii însoțite de punctele cheie ce trebuie atinse într-un răspuns optim.
+   
 
 ## 📊 Pipeline-ul de Date & Curare (CV Dataset)
 
