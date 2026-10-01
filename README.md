@@ -27,8 +27,8 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
 
    * **Validare Strictă cu Pydantic:** Pentru a elimina răspunsurile nestructurate sau erorile de parsare:
   * **Extracția intenției de rol:** Modelează ieșirea prin schema `RoleExtractionResponse` (`is_specific_request: bool`, `extracted_role: Optional[str]`), diferențiind intențiile specifice de cererile vagi sau deschise.
-  * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete[cite: 17].
-   * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
+  * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete.
+    * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
 
 3. **Agent 3 (Technical Gap Analysis & Career Roadmap):**
    * Compară profilul structurat al candidatului cu cerințele joburilor selectate.
