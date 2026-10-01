@@ -16,10 +16,17 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
      * `Clean_Summary` (rezumat executiv concis)
 
 2. **Agent 2 (Adaptive Hybrid Job Matching via LangGraph):**
-   * **Intent & Role Resolution:** Standardizează rolul vizat fie pe baza preferințelor explicite introduse de utilizator, fie prin fallback pe profilul extras din CV.
-   * **HyDE (Hypothetical Document Embeddings):** Sintetizează o fișă de post ideală detaliată pentru a servi drept interogare contextuală bogată.
-   * **Hybrid Search (Qdrant):** Combină căutarea densă (`text-embedding-3-small`, 1536 dim) cu vectori rari BM25 (`FastEmbed`) prin algoritmul Reciprocal Rank Fusion (RRF).
-   * **Neural Reranking:** Re-evaluează candidații cu un model local Cross-Encoder (`ms-marco-MiniLM-L-6-v2`).
+   * **Orchestrare cu LangGraph & LangChain:** Întreg fluxul este modelat ca un `StateGraph` :
+  * `cv_text` & `user_target_text`: Intrările brute ale candidatului.
+  * `resolved_role`: Rolul standardizat extras din intenție sau din profilul CV.
+  * `hyde_document`: Documentul ipotetic de post sintetizat dinamic.
+  * `candidate_jobs` & `top_jobs`: Rezultatele extrase din Qdrant și re-ierarhizate.
+  * `best_score`: Scorul Cross-Encoder al celei mai bune potriviri.
+  * `retry_count` & `feedback`: Mecanismul de memorie pentru corecția iterativă.
+  * `source`: Indicatorul sursei finale a fișelor (`"qdrant"` sau `"web"`).
+* **Validare Strictă cu Pydantic:** Pentru a elimina răspunsurile nestructurate sau erorile de parsare:
+  * **Extracția intenției de rol:** Modelează ieșirea prin schema `RoleExtractionResponse` (`is_specific_request: bool`, `extracted_role: Optional[str]`), diferențiind intențiile specifice de cererile vagi sau deschise.
+  * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete[cite: 17].
    * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
 
 3. **Agent 3 (Technical Gap Analysis & Career Roadmap):**
@@ -81,16 +88,12 @@ Antrenamentul a fost monitorizat complet în **Weights & Biases (W&B)**:
 
 * **Evoluția `train/loss`:** A pornit de la o valoare inițială ridicată de **~2.84** (pasul 10), coborând rapid sub 1.20 până la pasul 50 și stabilizându-se într-un interval optim de convergență între **0.90 și 1.05**, atingând valoarea finală de **0.8968** la pasul 350.
 * **Evaluarea `eval/loss`:** Deoarece parametrul de evaluare a fost setat pe `eval_strategy = "epoch"` pentru o singură epocă de antrenament, calculul metricilor pe setul de validare s-a executat o singură dată (la pasul 350), înregistrând un **validation loss de 1.0001**.
-* **Viteza de procesare pe setul de validare:**
-  * `eval/samples_per_second`: ~0.388
-  * `eval/steps_per_second`: ~0.098
-  * `eval/runtime`: ~902 secunde (~15 minute pentru cele 350 de CV-uri de validare).
 
 ---
 
 ### Evaluarea Modelului pe Setul de Test (350 CV-uri)
 
-Performanța finală a modelului a fost calculată prin inferență directă pe cele **350 de CV-uri din setul de testare** (complet nevăzute la antrenare)[cite: 13]:
+Performanța finală a modelului a fost calculată prin inferență directă pe cele **350 de CV-uri din setul de testare**:
 
 | Metrică de Performanță | Scor Înregistrat | Descriere |
 | :--- | :---: | :--- |
