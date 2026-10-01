@@ -24,6 +24,7 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
   * `best_score`: Scorul Cross-Encoder al celei mai bune potriviri.
   * `retry_count` & `feedback`: Mecanismul de memorie pentru corecția iterativă.
   * `source`: Indicatorul sursei finale a fișelor (`"qdrant"` sau `"web"`).
+
    * **Validare Strictă cu Pydantic:** Pentru a elimina răspunsurile nestructurate sau erorile de parsare:
   * **Extracția intenției de rol:** Modelează ieșirea prin schema `RoleExtractionResponse` (`is_specific_request: bool`, `extracted_role: Optional[str]`), diferențiind intențiile specifice de cererile vagi sau deschise.
   * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete[cite: 17].
