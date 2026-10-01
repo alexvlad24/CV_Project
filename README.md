@@ -16,19 +16,20 @@ Fluxul complet al aplicației este condus de un orchestrator central și 3 agen�
      * `Clean_Summary` (rezumat executiv concis)
 
 2. **Agent 2 (Adaptive Hybrid Job Matching via LangGraph):**
-   * **Orchestrare cu LangGraph & LangChain:** Întreg fluxul este modelat ca un `StateGraph` :
-  * `cv_text` & `user_target_text`: Intrările brute ale candidatului.
-  * `resolved_role`: Rolul standardizat extras din intenție sau din profilul CV.
-  * `hyde_document`: Documentul ipotetic de post sintetizat dinamic.
-  * `candidate_jobs` & `top_jobs`: Rezultatele extrase din Qdrant și re-ierarhizate.
-  * `best_score`: Scorul Cross-Encoder al celei mai bune potriviri.
-  * `retry_count` & `feedback`: Mecanismul de memorie pentru corecția iterativă.
-  * `source`: Indicatorul sursei finale a fișelor (`"qdrant"` sau `"web"`).
+   * **Orchestrare cu LangGraph & LangChain:** Întreg fluxul este modelat ca un `StateGraph`:
+     * `cv_text` & `user_target_text`: Intrările brute ale candidatului.
+     * `resolved_role`: Rolul standardizat extras din intenție sau din profilul CV.
+     * `hyde_document`: Documentul ipotetic de post sintetizat dinamic.
+     * `candidate_jobs` & `top_jobs`: Rezultatele extrase din Qdrant și re-ierarhizate.
+     * `best_score`: Scorul Cross-Encoder al celei mai bune potriviri.
+     * `retry_count` & `feedback`: Mecanismul de memorie pentru corecția iterativă.
+     * `source`: Indicatorul sursei finale a fișelor (`"qdrant"` sau `"web"`).
 
    * **Validare Strictă cu Pydantic:** Pentru a elimina răspunsurile nestructurate sau erorile de parsare:
-  * **Extracția intenției de rol:** Modelează ieșirea prin schema `RoleExtractionResponse` (`is_specific_request: bool`, `extracted_role: Optional[str]`), diferențiind intențiile specifice de cererile vagi sau deschise.
-  * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete.
-    * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
+     * **Extracția intenției de rol:** Modelează ieșirea prin schema `RoleExtractionResponse` (`is_specific_request: bool`, `extracted_role: Optional[str]`), diferențiind intențiile specifice de cererile vagi sau deschise.
+     * **Sinteza fișelor de post:** Modelează ieșirea prin `WebSearchJobExtraction` și `JobProfileSchema`, forțând extragerea garantată a 3 profiluri cu atribuții tehnice clare și competențe concrete.
+
+   * **Self-Correction & Web Fallback:** Dacă scorul de relevanță scade sub un prag prestabilit, agentul formulează un diagnostic tehnic pentru regenerarea promptului HyDE sau comută automat pe căutare pe web prin Tavily.
 
 3. **Agent 3 (Technical Gap Analysis & Career Roadmap):**
    * Compară profilul structurat al candidatului cu cerințele joburilor selectate.
